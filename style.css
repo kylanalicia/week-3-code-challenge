@@ -1,0 +1,69 @@
+/* Global styles */
+body {
+    background-color: #252323;
+    color: #dae3ed;
+    font-family: Arial, sans-serif;
+}
+
+/* Heading styles */
+.heading {
+    background-color: #4a062b;
+    margin-top: 20px;
+    padding: 5px 15px;
+}
+
+/* Title styles */
+.title {
+    background-color: #333333;
+    padding: 5px;
+    color: rgb(140,77,77);
+}
+
+/* Duration styles */
+#duration {
+    background-color: #470722;
+    color: #9faebd;
+    padding: 0px 5px 5px;
+}
+
+/* Content styles */
+.content {
+    line-height: 1.5;
+}
+
+/* Subtitle styles */
+#subtitle {
+    color: white;
+    margin-left: 55px;
+    font-style: italic;
+}
+
+/* Showing styles */
+#showing {
+    margin-left: 30px;
+    font-weight: bold;
+}
+
+/* Film styles */
+#film {
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Sold out styles */
+.sold-out {
+    color: lightgray;
+    text-decoration: line-through;
+}
+
+/* Image styles */
+img {
+    max-width: 25vw;
+    border-radius: 5px;
+}
+
+/* Film info styles */
+#film-info {
+    padding-bottom: 15px;
+}
