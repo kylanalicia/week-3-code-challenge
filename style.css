@@ -1,69 +1,98 @@
-/* Global styles */
 body {
-    background-color: #252323;
-    color: #dae3ed;
-    font-family: Arial, sans-serif;
+    background-color: aquamarine;
 }
 
-/* Heading styles */
-.heading {
-    background-color: #4a062b;
-    margin-top: 20px;
-    padding: 5px 15px;
+.navbar {
+    background-color: rgb(114, 41, 127);
+    border-radius: 10px;
+    color: #ffffff;
 }
 
-/* Title styles */
-.title {
-    background-color: #333333;
-    padding: 5px;
-    color: rgb(140,77,77);
+.container-fluid {
+    text-align: center;
 }
 
-/* Duration styles */
-#duration {
-    background-color: #470722;
-    color: #9faebd;
-    padding: 0px 5px 5px;
+li {
+    list-style: none;
 }
 
-/* Content styles */
-.content {
-    line-height: 1.5;
+.border {
+    border: 1px solid red;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
 }
 
-/* Subtitle styles */
-#subtitle {
+.btn {
+    background-color: rgb(234, 157, 15);
     color: white;
-    margin-left: 55px;
-    font-style: italic;
-}
-
-/* Showing styles */
-#showing {
-    margin-left: 30px;
+    border: none;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
     font-weight: bold;
-}
-
-/* Film styles */
-#film {
-    font-size: 16px;
+    font-size: 20px;
+    text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-/* Sold out styles */
-.sold-out {
-    color: lightgray;
-    text-decoration: line-through;
+.film-details {
+    display: flex;
+    width: 98%;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: row;
+    height: 100%;
+    background-color: rgb(114, 41, 127);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
 }
 
-/* Image styles */
-img {
-    max-width: 25vw;
-    border-radius: 5px;
+
+.card {
+    display: flex;
+    background-color: rgb(37, 75, 156);
+    color: white;
+    flex-direction: column;
+    margin: 10px;
+    border: 1px solid rgb(80, 28, 89);
+    border-radius: 10px;
 }
 
-/* Film info styles */
-#film-info {
-    padding-bottom: 15px;
+.bg-danger {
+    background: red;
+    color: white;
+}
+
+.btn-danger {
+    background-color: red;
+    color: white;
+    font-size: 10px;
+}
+
+#poster {
+    width: 980px;
+    height: 810px;
+}
+
+#headtitle {
+    font-size: 2.5em;
+}
+
+#descript {
+    font-size: 1.7em;
+    font-family: 'Pacifico',cursive;
+}
+
+#showingmovie li{
+    color: blue;
+    cursor: pointer;
 }
