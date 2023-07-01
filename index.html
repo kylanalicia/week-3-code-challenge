@@ -9,25 +9,50 @@
 </head>
 
 <body>
+
+  <!--heading-->
   <header>
+    <div class="heading">
+      <div class="item">
+        <h2 class="ui header">
     <i><div class="content">WELCOME TO GENIE FLATDANGO!</div></i>
     <i><div class="subheader" id="subtitle">EXPERIENCE MOVIE MAGIC!!</div></i>
-    <img src="https://st3.depositphotos.com/6343398/34742/i/1600/depositphotos_347426736-stock-photo-ticket-popcorn-filmstrip-and-clapper.jpg" alt="Movie ticket, popcorn, filmstrip and clapper image" style="width:1000px;height:700px;">
-</header>
-<h2>AVAILABLE MOVIES MENU</h2>
-<ul id="films">
-  <!-- ...list items will be dynamically added here... -->
-</ul>
-    <div id="movie-details"></div>
-    <!-- movie details will be displayed here -->
-    <p id="run">Runtime:</p>
-    <p id="runtime"></p>
-    <p id="show">Showtime:</p>
-    <p id="showtime"></p>
-    <p id="available">Available Tickets:</p>
-    <p id="Available-tickets"></p>
-    <div id="card"></div>  
-    <button id="ticketsBtn">GET YOUR TICKETS NOW!!</button> 
-    <div class="movie-menu"></div>
+    </h2>
+    </div>
+    <nav>
+      <a href="#" onclick="toggleMenu()">MENU</a>
+      <input type="checkbox" id="check">
+      <label for="check" class="mobile">&#9776;</label>
+      <ul class="menu mobile hidden"></ul>
+    </nav>
+    </div>
+
+    <!--image-->
+    <div class="four wide column">
+    <img src="https://st3.depositphotos.com/6343398/34742/i/1600/depositphotos_347426736-stock-photo-ticket-popcorn-filmstrip-and-clapper.jpg" alt="Movie poster" style="width:1000px;height:700px;">
+    </div>
+
+    <!--movie details-->
+    <section id="infobox">
+      <div class="four wide column">
+        <div class="ui cards" id="showing">
+          <div class="card">
+            <div id="title" class="title"></div>
+            <div id="runtime" class="meta">[RUNTIME]minutes</div>
+            <div class="content">
+            <div id="genre" class="description">
+              <div id="film-info"></div>
+              <span id="showtime" class="ui label">[SHOWTIME]</span>
+              <span id="ticket-number">[--]</span>remaining tickets
+            </div>
+          </div>
+
+          <!--Buying ticket-->
+          <div class="extra content">
+            <button id="ticketsBtn" class="ui blue button">GET YOUR TICKETS NOW!!</button> 
+          </div>
+        </div>
+      </div>
+    </section>
 </body>
 </html>

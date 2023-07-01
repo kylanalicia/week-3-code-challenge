@@ -1,92 +1,87 @@
-// Get references to HTML elements
-const filmsList = document.getElementById('films'); // List of films
-const movieDetails = document.getElementById('movie-details'); // Container for movie details
-const runtime = document.getElementById('runtime'); // Display for movie runtime
-const showtime = document.getElementById('showtime'); // Display for movie showtime
-const availableTickets = document.getElementById('Available-tickets'); // Display for available tickets count
-const ticketButton = document.getElementById('ticketsBtn'); // Button to purchase tickets
+let URL = 'http://localhost:3000/films';
+const listHolder = document.getElementById('films');
 
-// Fetch movie data from API
-fetch('http://localhost:3000/films')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Failed to fetch movie data');
-    }
-    return response.json();
-  })
-  .then(data => {
-    // Populate movies list
-    data.forEach(movie => {
-      const listItem = document.createElement('li'); // Create a list item element
-      listItem.textContent = movie.title; // Set the text content of the list item to the movie title
-      listItem.value = movie.id; // Assuming the API provides movie IDs, assign the movie ID to the list item value
-      filmsList.appendChild(listItem); // Append the list item to the films list
-    });
-  })
-  .catch(error => {
-    console.error('Error fetching movie data:', error);
-    alert('Failed to fetch movie data. Please try again later.');
-  });
-
-// Add event listener for movie selection
-filmsList.addEventListener('click', (event) => {
-  const movieId = event.target.value; // Get the selected movie ID
-
-  // Fetch movie details from API based on the selected movie ID
-  fetch(`http://localhost:3000/films/${movieId}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to fetch movie details');
-      }
-      return response.json();
-    })
-    .then(movie => {
-      // Display movie details
-      movieDetails.innerHTML = `
-        <h3>${movie.title}</h3>
-        <p>Runtime: ${movie.runtime}</p>
-        <p>Showtime: ${movie.showtime}</p>
-        <p>Available Tickets: ${movie.availableTickets}</p>
-      `;
-
-      // Update the global variables with the selected movie details
-      runtime.textContent = `Runtime: ${movie.runtime}`;
-      showtime.textContent = `Showtime: ${movie.showtime}`;
-      availableTickets.textContent = `Available Tickets: ${movie.availableTickets}`;
-    })
-    .catch(error => {
-      console.error('Error fetching movie details:', error);
-      alert('Failed to fetch movie details. Please try again later.');
-    });
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementsByClassName('film item')[0].remove();
+  fetchOne(URL);
+  fetchMovies(URL);
 });
 
-// Add event listener for ticket button click
-ticketButton.addEventListener('click', () => {
-  const movieId = filmsList.value; // Get the selected movie ID
-
-  // Fetch movie details from API based on the selected movie ID
-  fetch(`http://localhost:3000/films/${movieId}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to fetch movie details');
-      }
-      return response.json();
-    })
-    .then(movie => {
-      if (movie && movie.availableTickets > 0) {
-        // Decrement available tickets count
-        movie.availableTickets--;
-
-        // Update the displayed available tickets count
-        availableTickets.textContent = `Available Tickets: ${movie.availableTickets}`;
-
-        alert('Congratulations! You have successfully purchased a ticket.');
-      } else {
-        alert('Sorry, there are no more tickets available for this movie.');
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching movie details:', error);
-      alert('Failed to fetch movie details. Please try again later.');
+/**fetch 1 movie */
+function fetchOne(URL) {
+  fetch(URL)
+    .then((response) => response.json())
+    .then((data) => {
+      setUpMovieDetails(data.films[0]);
     });
+}
+
+// Create fetch function to get the data from the db.json
+function fetchMovies(URL) {
+  fetch(URL)
+    .then((resp) => resp.json())
+    .then((movies) => {
+      movies.films.forEach((movie) => {
+        displayMovie(movie);
+      });
+    });
+}
+
+// Function to display the titles of the movies as a list
+function displayMovie(movie) {
+  const list = document.createElement('li');
+  list.style.cursor = 'cell';
+  list.textContent = movie.title;
+  listHolder.appendChild(list);
+  addClickEvent();
+}
+
+// Adding the click event listener
+function addClickEvent() {
+  let children = listHolder.children;
+  for (let i = 0; i < children.length; i++) {
+    let child = children[i];
+    child.addEventListener('click', () => {
+      fetch(`${URL}`)
+        .then((res) => res.json())
+        .then((movie) => {
+          document.getElementById('buy-ticket').textContent = 'Buy Ticket';
+          setUpMovieDetails(movie.films[i]);
+        });
+    });
+  }
+}
+
+// Posting movie details
+// Poster to be displayed on the div with poster id
+function setUpMovieDetails(funMovie) {
+  const preview = document.getElementById('poster');
+  preview.src = funMovie.poster;
+  // Title
+  const movieTitle = document.querySelector('#title');
+  movieTitle.textContent = funMovie.title;
+  // Runtime
+  const movieTime = document.querySelector('#runtime');
+  movieTime.textContent = `${funMovie.runtime} minutes`;
+  // Description
+  const movieDescription = document.querySelector('#film-info');
+  movieDescription.textContent = funMovie.description;
+  // Showtime
+  const showTime = document.querySelector('#showtime');
+  showTime.textContent = funMovie.showtime;
+  // Available tickets = capacity - tickets sold
+  const tickets = document.querySelector('#ticket-number');
+  tickets.textContent = funMovie.capacity - funMovie.tickets_sold;
+}
+
+// Sold out
+const btn = document.getElementById('buy-ticket');
+btn.addEventListener('click', function (event) {
+  let remainingTickets = document.querySelector('#ticket-number').textContent;
+  event.preventDefault();
+  if (remainingTickets > 0) {
+    document.querySelector('#ticket-number').textContent = remainingTickets - 1;
+  } else if (parseInt(remainingTickets, 10) === 0) {
+    btn.textContent = 'Sold Out';
+  }
 });
