@@ -1,63 +1,92 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const moviesListContainer = document.querySelector("#moviesList");
-    const moviesDetailsContainer = document.querySelector("#movieDetails");
-  
+function moviesPage() {
+    const movies = document.getElementById("films");
+    const searchBtn = document.getElementById("Search");
+
+searchBtn.addEventListener("click", function() {
+    alert("Button clicked!")
+});
+
     fetch("http://localhost:3000/films")
-      .then((response) => response.json())
-      .then((data) => {
-        displayMoviesList(data.films);
-      });
-  
-    function displayMoviesList(data) {
-      data.map((movie) => {
-        const markUp = `<li class="list-group-item" id="moviesList">${movie.title}</li>`;
-        moviesListContainer.insertAdjacentHTML("afterbegin", markUp);
-  
-        const moviesList = document.querySelector("#moviesList");
-        moviesList.addEventListener("click", () => {
-          displayMoviesDetails(movie);
+        .then((response) => response.json())
+        .then((data) => createFilmDetails(data.films));
+
+    function createFilmDetails(data) {
+        const details = document.getElementById('film-details');
+
+        data.forEach((film) => {
+            const movieList = document.createElement("p");
+            const pTitle = document.createElement("span");
+            pTitle.innerText = film.title;
+            movieList.appendChild(pTitle);
+            movies.appendChild(movieList);
+
+            movieList.addEventListener("click", () => {
+                details.innerHTML = "";
+                displayFilmDetails(film, details);
+            });
         });
-      });
     }
-  
-    function displayMoviesDetails(movie) {
-      const markUp = `
-        <img src="${movie.poster}" alt="">
-        <div class="Ola">
-          <h2 id="movieTitle" class="customtitles">${movie.title}</h2>
-          <p>${movie.description}</p>
-          <p>${movie.showtime}</p>
-          <p>${movie.capacity}</p>
-          <p>${movie.tickets_sold}</p>
-          <p>${movie.availableTickets}</p>
-          <button class="custombtn" id="buyTicket">Buy Ticket</button>
-        </div>`;
-  
-      moviesDetailsContainer.innerHTML = "";
-      moviesDetailsContainer.insertAdjacentHTML("afterbegin", markUp);
-  
-      const btn = moviesDetailsContainer.querySelector("button");
-      btn.addEventListener("click", () => {
-        buyTicket(movie);
-      });
+
+    function displayFilmDetails(film, details) {
+        const title = document.createElement("h1");
+        title.innerText = film.title;
+        details.appendChild(title);
+
+        const runtime = document.createElement("p");
+        runtime.innerHTML = `<b>Run Time:</b> ${film.runtime}`;
+        details.appendChild(runtime);
+
+        const poster = document.createElement("img");
+        poster.src = film.poster;
+        details.appendChild(poster);
+
+        const showtime = document.createElement("p");
+        showtime.innerHTML = `<b>Show time:</b> ${film.showtime}<br><b>Available Tickets</b>`;
+        details.appendChild(showtime);
+
+        const description = document.createElement("p");
+        description.innerText = film.description;
+        details.appendChild(description);
+
+        const capacity = film.capacity;
+        const ticketsSold = film.tickets_sold;
+        const availableTickets = capacity - ticketsSold;
+
+        const ticketsAvailable = document.createElement("p");
+        ticketsAvailable.innerHTML = `<span style="color:#0080ff;">${availableTickets} Available</span>`;
+        
+        const buyTicketBtn = document.createElement("button");
+        buyTicketBtn.textContent = `Buy ${availableTickets} Ticket(s)`;
+        buyTicketBtn.className = 'custombtn';
+        buyTicketBtn.style.marginTop = '1rem';
+
+        buyTicketBtn.addEventListener("click", () => {
+            buyTicket(film._id);
+        });
+
+        details.appendChild(ticketsAvailable);
+        details.appendChild(buyTicketBtn);
     }
-  
-    function buyTicket(movie) {
-      const ticketsSold = document.querySelector("#ticketsSold");
-      let remainingTickets = movie.capacity - movie.tickets_sold;
-      const btn = moviesDetailsContainer.querySelector("button");
-      const availableTickets = document.querySelector("#availableTickets");
-  
-      if (remainingTickets > 0) {
-        movie.tickets_sold++;
-        remainingTickets--;
-        btn.innerHTML = "Buy Ticket";
-      } else {
-        btn.innerHTML = "Sold Out";
-        btn.classList.add("soldOut");
-      }
-      ticketsSold.innerHTML = `Tickets sold: <span>${movie.tickets_sold}</span>`;
-      availableTickets.innerHTML = `Available tickets: <span>${remainingTickets}</span>`;
+
+    function buyTicket(movieId) {
+        if (!loggedInUser) {
+            alert('Please login to purchase a ticket');
+            return false;
+        }
+
+        fetch(`/api/users/${userId}/purchase-ticket`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ "movieId": movieId })
+        })
+            .then((res) => res.json())
+            .catch(() => console.error('Error'))
+            .finally(() => {
+                window.location.reload();
+            });
     }
-  });
-  
+
+    document.addEventListener("DOMContentLoaded", moviesPage);
+}

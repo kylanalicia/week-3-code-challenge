@@ -1,52 +1,33 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>GenieFlatdango</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Genie Flatdango Movie Tickets</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+</head>
 
-    <body>
-        <!-- Navbar -->
-        <h2>
-            <div class="content">Welcome to GenieFlatdango!</div>
-            <div class="subheader" id="subtitle">Experience Movie Magic</div>
-        </h2>
-        
-        <div class="ui centered grid">
-            <div class="four wide column">
-                <div class="list-container">
-                    <ul class="ui divided list" id="films">
-                        <li class="film-item">Featured Movies</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- Poster -->
-            <div class="four wide column">
-                <img src="assets/placeholderimage.png" alt="Movie Poster">
-            </div>
-            
-            <!-- Information -->
-            <div class="four wide column">
-                <div class="ui cards" id="showing">
-                    <div class="card">
-                        <div id="title" class="title">Movie Title</div>
-                        <div id="duration" class="meta">Duration (minutes)</div>
-                        <div class="content">
-                            <div class="description">
-                                <div id="film-info">Movie Description</div>
-                                <span id="showtime" class="ui-label">Showtime</span>
-                                <span id="ticket-number">X</span> Tickets Left
-                            </div>
-                        </div>
-                        <div class="extra content">
-                            <button id="buy-ticket" class="ui blue button">Get your Tickets Now!!</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <script src="index.js"></script>
-    </body>
+<body>
+  <header>
+    <i><div class="content">WELCOME TO GENIE FLATDANGO!</div></i>
+    <i><div class="subheader" id="subtitle">EXPERIENCE MOVIE MAGIC!!</div></i>
+    <img src="https://st3.depositphotos.com/6343398/34742/i/1600/depositphotos_347426736-stock-photo-ticket-popcorn-filmstrip-and-clapper.jpg" alt="Movie ticket, popcorn, filmstrip and clapper image" style="width:1000px;height:700px;">
+</header>
+<h2>AVAILABLE MOVIES MENU</h2>
+<ul id="films">
+  <!-- ...list items will be dynamically added here... -->
+</ul>
+    <div id="movie-details"></div>
+    <!-- movie details will be displayed here -->
+    <p id="run">Runtime:</p>
+    <p id="runtime"></p>
+    <p id="show">Showtime:</p>
+    <p id="showtime"></p>
+    <p id="available">Available Tickets:</p>
+    <p id="Available-tickets"></p>
+    <div id="card"></div>  
+    <button id="ticketsBtn">GET YOUR TICKETS NOW!!</button> 
+    <div class="movie-menu"></div>
+</body>
 </html>
