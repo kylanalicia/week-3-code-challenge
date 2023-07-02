@@ -1,87 +1,137 @@
-let URL = 'http://localhost:3000/films';
-const listHolder = document.getElementById('films');
+// Function to render movie data in HTML
+function renderData(element) {
+  const display = document.createElement("div");
+  display.className = "justData";
+  display.innerHTML = `
+    <img src="${element.poster}">
+    <p>${element.tickets_sold}</p>
+    <button id="ticketsBtn" class="ui blue button">GET YOUR TICKETS NOW!!</button>
+  `;
+  document.querySelector(".details").appendChild(display);
+  console.log(display);
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementsByClassName('film item')[0].remove();
-  fetchOne(URL);
-  fetchMovies(URL);
-});
-
-/**fetch 1 movie */
-function fetchOne(URL) {
-  fetch(URL)
-    .then((response) => response.json())
-    .then((data) => {
-      setUpMovieDetails(data.films[0]);
-    });
+  // Event listener for ticket button click
+  display.querySelector("#ticketsBtn").addEventListener("click", () => {
+    element.tickets_sold += 1;
+    element.capacity -= 1;
+    display.querySelector("p").textContent = element.tickets_sold;
+  });
 }
 
-// Create fetch function to get the data from the db.json
-function fetchMovies(URL) {
-  fetch(URL)
-    .then((resp) => resp.json())
-    .then((movies) => {
-      movies.films.forEach((movie) => {
-        displayMovie(movie);
-      });
-    });
+// Function to validate form fields
+function validateForm() {
+  // Validate the name field
+  const nameInput = document.getElementById("name");
+  if (nameInput.value === "") {
+    alert("Please enter a name.");
+    return false; // Prevent form submission
+  }
+
+  // Validate the email field
+  const emailInput = document.getElementById("email");
+  if (!emailInput.checkValidity()) {
+    alert("Please enter a valid email address.");
+    return false; // Prevent form submission
+  }
+
+  // Validate the password field
+  const passwordInput = document.getElementById("password");
+  if (passwordInput.value.length < 8) {
+    alert("Password must be at least 8 characters long.");
+    return false; // Prevent form submission
+  }
+
+  // All fields are valid, allow form submission
+  return true;
 }
 
-// Function to display the titles of the movies as a list
-function displayMovie(movie) {
-  const list = document.createElement('li');
-  list.style.cursor = 'cell';
-  list.textContent = movie.title;
-  listHolder.appendChild(list);
-  addClickEvent();
-}
+let totalTickets = 0;
+let continueBuying = true;
 
-// Adding the click event listener
-function addClickEvent() {
-  let children = listHolder.children;
-  for (let i = 0; i < children.length; i++) {
-    let child = children[i];
-    child.addEventListener('click', () => {
-      fetch(`${URL}`)
-        .then((res) => res.json())
-        .then((movie) => {
-          document.getElementById('buy-ticket').textContent = 'Buy Ticket';
-          setUpMovieDetails(movie.films[i]);
-        });
-    });
+while (continueBuying) {
+  let input = prompt("How many movie tickets would you like to buy?");
+
+  if (input === null) {
+    // User clicked cancel, exit the loop
+    continueBuying = false;
+  } else {
+    let tickets = parseInt(input);
+
+    if (!isNaN(tickets) && tickets > 0) {
+      totalTickets += tickets;
+      console.log(`You've added ${tickets} ticket(s) to your cart.`);
+    } else {
+      console.log("Invalid input. Please enter a valid number.");
+    }
   }
 }
 
-// Posting movie details
-// Poster to be displayed on the div with poster id
-function setUpMovieDetails(funMovie) {
-  const preview = document.getElementById('poster');
-  preview.src = funMovie.poster;
-  // Title
-  const movieTitle = document.querySelector('#title');
-  movieTitle.textContent = funMovie.title;
-  // Runtime
-  const movieTime = document.querySelector('#runtime');
-  movieTime.textContent = `${funMovie.runtime} minutes`;
-  // Description
-  const movieDescription = document.querySelector('#film-info');
-  movieDescription.textContent = funMovie.description;
-  // Showtime
-  const showTime = document.querySelector('#showtime');
-  showTime.textContent = funMovie.showtime;
-  // Available tickets = capacity - tickets sold
-  const tickets = document.querySelector('#ticket-number');
-  tickets.textContent = funMovie.capacity - funMovie.tickets_sold;
+console.log(`Total tickets in your cart: ${totalTickets}`);
+
+// Film data
+const filmData = [
+  { title: "Film 1", genre: "action", releaseDate: "2022-01-01", rating: 4 },
+  { title: "Film 2", genre: "comedy", releaseDate: "2021-05-15", rating: 3.5 },
+  { title: "Film 3", genre: "drama", releaseDate: "2020-09-30", rating: 4.2 }
+  // Add more films as needed
+];
+
+// Function to render the film list based on current sorting and filtering selections
+function renderFilmList(sortBy, filterBy) {
+  let filteredFilms = filmData;
+
+  // Apply filtering
+  if (filterBy !== "all") {
+    filteredFilms = filteredFilms.filter(film => film.genre === filterBy);
+  }
+
+  // Apply sorting
+  filteredFilms.sort((a, b) => {
+    if (sortBy === "title") {
+      return a.title.localeCompare(b.title);
+    } else if (sortBy === "releaseDate") {
+      return new Date(a.releaseDate) - new Date(b.releaseDate);
+    } else if (sortBy === "rating") {
+      return b.rating - a.rating;
+    }
+  });
+
+  const filmList = document.getElementById("film-list");
+  filmList.innerHTML = "";
+
+  // Render the filtered and sorted film list
+  filteredFilms.forEach(film => {
+    const li = document.createElement("li");
+    li.textContent = film.title;
+    filmList.appendChild(li);
+  });
 }
 
-// Sold out
-const btn = document.getElementById('buy-ticket');
-btn.addEventListener('click', function (event) {
-  let remainingTickets = document.querySelector('#ticket-number').textContent;
-  event.preventDefault();
-  if (remainingTickets > 0) {
-    document.querySelector('#ticket-number').textContent = remainingTickets - 1;
-  } else if (parseInt(remainingTickets, 10) === 0) {
-    btn.textContent = 'Sold Out';
-  }
+// Event listener for sorting select
+const sortSelect = document.getElementById("sort-select");
+sortSelect.addEventListener("change", () => {
+  const sortBy = sortSelect.value;
+  const filterBy = genreSelect.value;
+  renderFilmList(sortBy, filterBy);
 });
+
+// Event listener for genre select
+const genreSelect = document.getElementById("genre-select");
+genreSelect.addEventListener("change", () => {
+  const sortBy = sortSelect.value;
+  const filterBy = genreSelect.value;
+  renderFilmList(sortBy, filterBy);
+});
+
+// Initial render of the film list
+renderFilmList("title", "all");
+
+// Function to fetch film data and render it in HTML
+function getData() {
+  fetch("http://localhost:3000/films")
+    .then((response) => {
+      response.json().then(films => films.forEach(element => renderData(element)));
+    });
+}
+
+getData();

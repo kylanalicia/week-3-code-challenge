@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Genie Flatdango Movie Tickets</title>
     <link rel="stylesheet" href="style.css">
-    <script src="index.js"></script>
 </head>
 
 <body>
-
   <!--heading-->
   <header>
     <div class="heading">
@@ -18,41 +16,102 @@
     <i><div class="content">WELCOME TO GENIE FLATDANGO!</div></i>
     <i><div class="subheader" id="subtitle">EXPERIENCE MOVIE MAGIC!!</div></i>
     </h2>
+    <i><h3>Book Tickets for the Latest Movies and Events</h3></i>
     </div>
-    <nav>
-      <a href="#" onclick="toggleMenu()">MENU</a>
-      <input type="checkbox" id="check">
-      <label for="check" class="mobile">&#9776;</label>
-      <ul class="menu mobile hidden"></ul>
-    </nav>
+    </div>
+    <div class="ui centered grid">
+    </div class="four wide column">
+    <div class="list-container">
+    </div>
     </div>
 
+    <!--links-->
+    <footer>
+      <div class="footer-links">
+        <a href="#">Home</a>
+        <a href="#">Movies</a>
+        <a href="#">Events</a>
+        <a href="#">Contact Us</a>
+      </div>
+    </footer>
+
+    <!--form-->
+ <form onsubmit="return validateForm()">
+  <label for="name">Name:</label>
+  <input type="text" id="name" required>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" required>
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" minlength="8" required>
+
+  <button type="submit">Submit</button>
+</form>
+    
     <!--image-->
-    <div class="four wide column">
-    <img src="https://st3.depositphotos.com/6343398/34742/i/1600/depositphotos_347426736-stock-photo-ticket-popcorn-filmstrip-and-clapper.jpg" alt="Movie poster" style="width:1000px;height:700px;">
-    </div>
+<div class="four wide column">
+  <img src="https://st3.depositphotos.com/6343398/34742/i/1600/depositphotos_347426736-stock-photo-ticket-popcorn-filmstrip-and-clapper.jpg"
+       alt="Movie poster">
+</div>
 
-    <!--movie details-->
-    <section id="infobox">
-      <div class="four wide column">
-        <div class="ui cards" id="showing">
-          <div class="card">
-            <div id="title" class="title"></div>
-            <div id="runtime" class="meta">[RUNTIME]minutes</div>
-            <div class="content">
-            <div id="genre" class="description">
-              <div id="film-info"></div>
-              <span id="showtime" class="ui label">[SHOWTIME]</span>
-              <span id="ticket-number">[--]</span>remaining tickets
-            </div>
-          </div>
+<!--movie-list to be appended here-->
+<!-- HTML -->
+<select id="sort-select">
+  <option value="title">Sort by Title</option>
+  <option value="releaseDate">Sort by Release Date</option>
+  <option value="rating">Sort by Rating</option>
+</select>
 
-          <!--Buying ticket-->
-          <div class="extra content">
-            <button id="ticketsBtn" class="ui blue button">GET YOUR TICKETS NOW!!</button> 
-          </div>
+<label for="genre-select">Filter by Genre:</label>
+<select id="genre-select">
+  <option value="all">All Genres</option>
+  <option value="action">Action</option>
+  <option value="comedy">Comedy</option>
+  <option value="drama">Drama</option>
+  <!-- Add more genre options as needed -->
+</select>
+
+<ul id="film-list">
+  <!-- Film list items will be dynamically added here -->
+</ul>
+
+<input id="search-input" type="text" placeholder="Search films">
+
+<ul id="film-list">
+  <!-- Film list items will be dynamically added here -->
+</ul>
+
+
+<div id="pagination-container">
+  <button id="prev-button" disabled>Prev</button>
+  <span id="pagination-info"></span>
+  <button id="next-button">Next</button>
+</div>
+
+
+<!--movie details-->
+<section class="ticket-info">
+  <h4>Your Tickets</h4>
+  <div class="ticket-details">
+    <h5>Movie Title</h5>
+    <p>Date: September 30, 2022</p>
+    <p>Time: 7:00 PM</p>
+    <p>Seats: A1, A2, A3</p>
+    <p>Total Price: $30.00</p>
+  </div>
+  <button class="checkout-btn">Proceed to Checkout</button>
+</section>
+
+        <!--Buying ticket-->
+        <div class="extra content">
+          
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
+<section class="details"></section>
+<script src="index.js"></script>
 </body>
 </html>

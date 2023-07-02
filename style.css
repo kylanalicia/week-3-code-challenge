@@ -15,35 +15,130 @@ header {
   color: blue;
 }
 
-/* CSS for the movie menu and details */
-.movie-menu {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin-top: 40px;
+footer {
+  background-color: #333;
+  padding: 20px;
+  color: #fff;
+  text-align: center;
 }
 
-#films {
-  list-style-type: none;
-  padding: 0;
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 10px;
 }
 
-#films li {
+.social-media-icons img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+p {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.movie-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.movie-card img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
   margin-bottom: 10px;
 }
 
-#movie-details {
-  padding: 10px;
-  border: 1px solid gray;
-  margin-top: 20px;
+.movie-card h3 {
+  font-size: 24px;
 }
 
-#run,
-#show,
-#available {
-  font-weight: bold;
+.movie-card p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.book-now-btn {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.ticket-info {
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.ticket-info h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.ticket-details {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.ticket-details h3 {
+  font-size: 18px;
   margin-bottom: 5px;
 }
+
+.ticket-details p {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.checkout-btn {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+/* Css for the form */
+    /* Center the form horizontally */
+    .form-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Style the form inputs and labels */
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button[type="submit"] {
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
 
 /* CSS for the tickets button */
 #ticketsBtn {
